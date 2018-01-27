@@ -9,10 +9,26 @@
     
     <body>
         <div id="container">
-            <video autoplay="true" id="videoElement"></video>
-        </div>
+            <h1><a href="//webrtc.github.io/samples/" title="WebRTC samples homepage">WebRTC samples</a> <span>MediaRecorder</span></h1>
 
-        <!--Scripts-->
-        <script src="js/mediaScript.js"></script>
+            <p>For more information see the MediaStream Recording API <a href="http://w3c.github.io/mediacapture-record/MediaRecorder.html" title="W3C MediaStream Recording API Editor's Draft">Editor's&nbsp;Draft</a>.</p>
+
+            <video id="gum" autoplay muted></video>
+            <video id="recorded" loop controls></video>
+
+            <div>
+              <button id="record" disabled>Start Recording</button>
+              <button id="play" disabled>Play</button>
+              <button id="download" disabled>Download</button>
+            </div>
+
+            <a href="https://github.com/webrtc/samples/tree/gh-pages/src/content/getusermedia/record" title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
+
+          </div>
+
+          <!-- include adapter for srcObject shim -->
+          <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+          <script src="js/main.js"></script>
+          <script src="../../../js/lib/ga.js"></script>
     </body>
 </html>
