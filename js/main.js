@@ -71,6 +71,7 @@ recordedVideo.addEventListener('error', function(ev) {
 
 function handleDataAvailable(event) {
   if (event.data && event.data.size > 0) {
+    console.log("event.data", typeof(event.data));
     recordedBlobs.push(event.data);
   }
 }
@@ -127,6 +128,21 @@ function stopRecording() {
   mediaRecorder.stop();
   console.log('Recorded Blobs: ', recordedBlobs);
   recordedVideo.controls = true;
+
+  var blob = new Blob(recordedBlobs, {type: 'video/webm'});
+  var url = window.URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.style.display = 'none';
+  a.href = url;
+  a.download = 'test.webm';
+  document.body.appendChild(a);
+  console.log(a);
+  // console.log(blobToFile(blob, "video.webm"));
+  a.click();
+  setTimeout(function() {
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  }, 100);
 }
 
 function play() {
@@ -148,6 +164,13 @@ function play() {
   });
 }
 
+function blobToFile(theBlob, fileName){
+    //A Blob() is almost a File() - it's just missing the two properties below which we will add
+    theBlob.lastModifiedDate = new Date();
+    theBlob.name = fileName;
+    return theBlob;
+}
+
 function download() {
   var blob = new Blob(recordedBlobs, {type: 'video/webm'});
   var url = window.URL.createObjectURL(blob);
@@ -156,6 +179,8 @@ function download() {
   a.href = url;
   a.download = 'test.webm';
   document.body.appendChild(a);
+  console.log(a);
+  // console.log(blobToFile(blob, "video.webm"));
   a.click();
   setTimeout(function() {
     document.body.removeChild(a);
