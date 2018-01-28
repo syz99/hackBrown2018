@@ -24,10 +24,10 @@ var recordedVideo = document.querySelector('video#recorded');
 
 var recordButton = document.querySelector('button#record');
 var playButton = document.querySelector('button#play');
-var downloadButton = document.querySelector('button#download');
+// var downloadButton = document.querySelector('button#download');
 recordButton.onclick = toggleRecording;
 playButton.onclick = play;
-downloadButton.onclick = download;
+// downloadButton.onclick = download;
 
 // window.isSecureContext could be used for Chrome
 var isSecureOrigin = location.protocol === 'https:' ||
@@ -80,13 +80,13 @@ function handleStop(event) {
 }
 
 function toggleRecording() {
-  if (recordButton.textContent === 'Start Recording') {
+  if (recordButton.textContent === 'Start') {
     startRecording();
   } else {
     stopRecording();
-    recordButton.textContent = 'Start Recording';
+    recordButton.textContent = 'Start';
     playButton.disabled = false;
-    downloadButton.disabled = false;
+    // downloadButton.disabled = false;
   }
 }
 
@@ -114,9 +114,9 @@ function startRecording() {
     return;
   }
   console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
-  recordButton.textContent = 'Stop Recording';
+  recordButton.textContent = 'Stop';
   playButton.disabled = true;
-  downloadButton.disabled = true;
+  // downloadButton.disabled = true;
   mediaRecorder.onstop = handleStop;
   mediaRecorder.ondataavailable = handleDataAvailable;
   mediaRecorder.start(10); // collect 10ms of data
@@ -127,6 +127,20 @@ function stopRecording() {
   mediaRecorder.stop();
   console.log('Recorded Blobs: ', recordedBlobs);
   recordedVideo.controls = true;
+
+  var blob = new Blob(recordedBlobs, {type: 'video/webm'});
+  var url = window.URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.style.display = 'none';
+  a.href = url;
+  a.download = 'test.webm';
+  console.log(a);
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function() {
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  }, 100);
 }
 
 function play() {
@@ -146,19 +160,4 @@ function play() {
       };
     }
   });
-}
-
-function download() {
-  var blob = new Blob(recordedBlobs, {type: 'video/webm'});
-  var url = window.URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.style.display = 'none';
-  a.href = url;
-  a.download = 'test.webm';
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(function() {
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-  }, 100);
 }

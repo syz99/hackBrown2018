@@ -2,19 +2,26 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="css/main.css"/>
+        <link rel="stylesheet" type="text/css" href="css/style.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="icon" href="images/favicon.ico"/> 
         <title>Deep Insight</title>
     </head>
     
     <body id="background">
         <div id="header" style="color: white; text-align: center; font-size:40px"> 
-            <div><img src="images/favicon.ico" height="42" width="42" style="border-radius: 50%"></div>
-            Deep Insight
-            <div id="choices" class="flex-container">
-                <a href="./formal.html"><button id="formal" style="font-family:Lobster; border-radius:20%; font-size:30px">formal path</button></a>
-                <a href="./informal.html"><button id="informal" style="font-family:Lobster; border-radius:20%; font-size:30px">informal path</button></a>
+            DEEP INSIGHT
+
+            <div id="container">
+                <div>
+                    <video id="gum" autoplay muted></video>
+                </div>
+        
+                <div id="buttons">
+                    <button id="record" disabled>Start</button>
+                    <button id="play" class="fa fa-play" disabled></button>
+                </div>
+
+                <video id="recorded" loop controls></video>
             </div>
         </div>
 
